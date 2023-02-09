@@ -1,24 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import UserContext from './context/UserContext';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Header from './components/Header';
+import Footer from './components/Footer';
+import ContactList from './components/ContactList';
+import { useMemo } from 'react';
+import Home from './components/pages/Home';
+
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className="App" >
+      <UserContext.Provider value={useMemo(() => ([]), [])}>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </UserContext.Provider>
+
+    </div >
   );
 }
 
