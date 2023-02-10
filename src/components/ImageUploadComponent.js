@@ -1,26 +1,38 @@
-import { useState } from "react";
+import axios from "axios";
 import swal from "sweetalert";
+
 
 function ImageUpload(props) {
   const { image, setImage, filter } = props;
 
-  const fileToDataUri = (file) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      resolve(event.target.result)
-    };
-    reader.readAsDataURL(file);
-  })
 
-  
+  const handleUpload = async (file) => {
+    const shownImage = URL.createObjectURL(file);
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.post('http://localhost:3001/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response.data);
+      setImage(response.data);
+    } catch (error) {
+      console.error(error);
+      setImage(shownImage);
+    }
+  };
+
+
   const handleChange = event => {
     const file = event.target.files[0];
     if (file) {
       const types = ["image/jpeg", "image/png"];
       if (types.includes(file.type)) {
-        fileToDataUri(file).then((dataUri) => {
-          setImage(dataUri);
-        });
+        handleUpload(file);
       } else {
         setImage("");
         swal(

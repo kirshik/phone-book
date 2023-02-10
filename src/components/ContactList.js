@@ -5,23 +5,15 @@ import Contact from "./Contact"
 import { nanoid } from 'nanoid';
 import ContactDetailsModal from './modals/ContactDetailsModal';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import ScrollDetector from './ScrollDetector';
 
 
 function ContactList(props) {
 
-  const [displayedContacts, setDisplayedContacts] = useState([]);
-  const [startIndex, setStartIndex] = useState(0);
   const [selectedContact, setSelectedContact] = useState(0);
   const [showModal, setShowModal] = useState(false);
-  const { contacts, refetch } = props;
+  const { contacts, refetch, offset, setOffset } = props;
   const [isNotEdit, setIsNotEdit] = useState(true);
-  const chunkSize = 5;
-
-  useEffect(() => {
-    const newDisplayedContacts = contacts.slice(startIndex, startIndex + chunkSize);
-    setDisplayedContacts(newDisplayedContacts);
-  }, [startIndex, contacts]);
-
 
   const handleContactClick = (contact) => {
     setSelectedContact(contact.id);
@@ -35,26 +27,26 @@ function ContactList(props) {
     refetch();
   };
 
+  const handleScrollUp = () => {
+    offset >= 5 ? setOffset(offset - 5) : setOffset(0);
+  }
+
+  const handleScrollDown = () => {
+    setOffset(offset + 5);
+  }
+
   return (
     <>
-      <InfiniteScroll
-        dataLength={contacts.length}
-        next={() => setStartIndex(startIndex + chunkSize)}
-        hasMore={startIndex + chunkSize < contacts.length}
-        loader={<h4>Loading...</h4>}
-        endMessage={"That's all folks!"}
-
-      >
-        <ListGroup >
-          {contacts.map((contact) => (
-            <Contact
-              key={nanoid()}
-              contact={contact}
-              onClick={() => handleContactClick(contact)}
-            />
-          ))}
-        </ListGroup>
-      </InfiniteScroll>
+      <ScrollDetector handleScrollUp={handleScrollUp} handleScrollDown={handleScrollDown} />
+      <ListGroup >
+        {contacts.map((contact) => (
+          <Contact
+            key={nanoid()}
+            contact={contact}
+            onClick={() => handleContactClick(contact)}
+          />
+        ))}
+      </ListGroup>
       <ContactDetailsModal id={selectedContact} showModal={showModal}
         handleModalClose={handleModalClose} isNotEdit={isNotEdit} setIsNotEdit={setIsNotEdit}
       />

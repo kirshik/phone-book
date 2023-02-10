@@ -27,7 +27,7 @@ function PhoneNumbersList(props) {
           <div key={number.id} className="text-center">
             <input
               disabled={props.isNotEdit}
-              type="text"
+              type="number"
               value={number.number}
               onChange={event => handleChange(event, index)}
               className="form-control mt-1 mb-1"

@@ -32,4 +32,5 @@ const UPDATE_CONTACT = gql`
     }
   }
 `
+
 export { REMOVE_CONTACT, ADD_CONTACT, UPDATE_CONTACT }

@@ -13,7 +13,7 @@ function Contact(props) {
     <ListGroupItem onClick={props.onClick} style={{ cursor: "pointer" }}>
       <div className="row align-items-center">
         <div className="col-2" >
-          <img className={`img img-thumbnail contact-img ${contact.filter}`} src={contact.photo} style={{ width: "7vw" }} onLoad={onLoad} />
+          <img className={`img img-thumbnail contact-img ${contact.filter}`} src={contact.photo} onLoad={onLoad} />
           <div className="d-flex justify-content-center" >
             <div className="spinner-border" role="status" hidden={spinner}>
               <span className="visually-hidden">Loading...</span>

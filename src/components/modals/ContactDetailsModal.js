@@ -89,19 +89,21 @@ function ContactDetailsModal(props) {
       swal("Contact updated successfully", {
         icon: "success",
       });
-      console.log(res);
       props.setIsNotEdit(true);
       refetch();
     }).catch((err) => {
       swal("Something went wrong!", {
         icon: "error",
       });
-      console.log(err);
     });
   }
 
   const handleEditFieldChange = (e) => {
     setContactEditData({ ...contactEditData, [e.target.id]: e.target.value })
+  }
+
+  const handleEmptyField = (value) => {
+    return value ? value : 'Empty';
   }
 
 
@@ -112,7 +114,6 @@ function ContactDetailsModal(props) {
         onHide={props.handleModalClose}
         aria-labelledby="contained-modal-title-vcenter"
         centered>
-        {/* // size="lg"> */}
         {contact && (
           <>
             <Modal.Header closeButton>
@@ -133,18 +134,18 @@ function ContactDetailsModal(props) {
                     <div className="form-group">
                       <label htmlFor="firstName">First Name:</label>
                       <input type="text" className="form-control" onChange={handleEditFieldChange}
-                        id="firstName" value={contactEditData.firstName} disabled={isNotEdit} />
+                        id="firstName" value={handleEmptyField(contactEditData.firstName)} disabled={isNotEdit} />
                       <label htmlFor="lastName">Last Name:</label>
                       <input type="text" className="form-control" onChange={handleEditFieldChange}
-                        id="lastName" value={contactEditData.lastName} disabled={isNotEdit} />
+                        id="lastName" value={handleEmptyField(contactEditData.lastName)} disabled={isNotEdit} />
                       <label htmlFor="nickname">Nickname:</label>
                       <input type="text" className="form-control" onChange={handleEditFieldChange}
-                        id="nickname" value={contactEditData.nickname} disabled={isNotEdit} />
+                        id="nickname" value={handleEmptyField(contactEditData.nickname)} disabled={isNotEdit} />
                       <label htmlFor="phoneNumbers">Phone Numbers:</label>
                       <PhoneNumbersList numbers={numbers} setNumbers={setNumbers} id="phoneNumbers" isNotEdit={isNotEdit} />
                       <label htmlFor="address">Address:</label>
                       <input type="text" className="form-control" onChange={handleEditFieldChange}
-                        id="address" value={contactEditData.address} disabled={isNotEdit} />
+                        id="address" value={handleEmptyField(contactEditData.address)} disabled={isNotEdit} />
 
                     </div>
                     <div className="mt-2" >

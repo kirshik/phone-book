@@ -33,8 +33,8 @@ function AddNewContactModal(props) {
     e.preventDefault();
     const changedNumbers = numbers.map((number) => number.number);
     if (changedNumbers.length > 0) {
-      // const photo = image ? image : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png";
-      const photo = "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png";
+      const photo = image ? image : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png";
+      // const photo = "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png";
       createContact({ variables: { contact: { ...contact, phoneNumbers: changedNumbers, photo, filter } } }).catch((err) => {
         swal("Something went wrong!!!!!", {
           icon: "error",

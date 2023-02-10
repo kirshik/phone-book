@@ -15,10 +15,10 @@ const GET_CONTACT = (value) => {
   `;
 }
 
-const SEARCH_CONTACT = (value) => {
+const SEARCH_CONTACT = (value, offset = 0, chunkSize = 5) => {
   return gql`
   query{
-    searchContacts(searchQuery : "${value}"){
+    searchContacts(searchQuery : "${value}", offset: ${offset}, chunkSize: ${chunkSize}){
       id
       firstName
       lastName
@@ -31,9 +31,10 @@ const SEARCH_CONTACT = (value) => {
   `;
 }
 
-const GET_ALL_CONTACTS = gql`
+const GET_ALL_CONTACTS = (offset, chunkSize = 5) => {
+  return gql`
   query{
-    getContacts{
+    getContacts(offset: ${offset}, chunkSize: ${chunkSize}){
       id
       nickname
       firstName
@@ -44,4 +45,5 @@ const GET_ALL_CONTACTS = gql`
     }
   }
   `;
+}
 export { GET_CONTACT, SEARCH_CONTACT, GET_ALL_CONTACTS } 
